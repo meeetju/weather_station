@@ -20,7 +20,7 @@ class Measurement():
     def __str__(self):
         return "{0}={1:4.2f} {2}".format(self._name, self.value, self._unit)
 
-class Device(ABC):
+class Sensor(ABC):
 
     @abstractmethod
     def get_measurements(self):

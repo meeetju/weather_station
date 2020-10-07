@@ -1,20 +1,17 @@
 import time
 
-import busio
+import board
 import adafruit_bmp280
 
-from _devices.device import Device, Measurement
+from _sensors.sensor import Sensor, Measurement
 
 
-class Bmp280(Device):
-
-    SCL_PIN = 5
-    SDA_PIN = 3
+class Bmp280(Sensor):
 
     def __init__(self):
         self._temperature = Measurement('Temperature', 'C')
         self._pressure = Measurement('Pressure', 'hPa')
-        self._i2c = busio.I2C(self.SCL_PIN, self.SDA_PIN)
+        self._i2c = board.I2C()
         self._sensor = adafruit_bmp280.Adafruit_BMP280_I2C(self._i2c)
 
     def get_measurements(self):
