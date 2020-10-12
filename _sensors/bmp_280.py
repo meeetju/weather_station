@@ -13,6 +13,7 @@ class Bmp280(Sensor):
         self._pressure = Measurement('Pressure', 'hPa')
         self._i2c = board.I2C()
         self._sensor = adafruit_bmp280.Adafruit_BMP280_I2C(self._i2c)
+        self._sensor.mode
 
     def get_measurements(self):
         self._temperature.value = self._poll_for_measurement(self._sensor.temperature)

@@ -18,7 +18,7 @@ class Measurement():
         return self._unit
 
     def __str__(self):
-        return "{0}={1:4.2f} {2}".format(self._name, self.value, self._unit)
+        return "{0}={1:4.1f}{2}".format(self._name, self.value, self._unit)
 
 class Sensor(ABC):
 

@@ -61,12 +61,7 @@ class Database():
 
 SQL_CREATE_MEASUREMENTS_TABLE = """ 
 CREATE TABLE IF NOT EXISTS measurements (
-year integer,
-month integer,
-day integer,
-hour integer,
-minute integer,
-second integer,
+timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
 humidity real,
 temperature real,
 pressure real
@@ -74,6 +69,6 @@ pressure real
 
 SQL_INSERT_QUERY = """
 INSERT INTO measurements
-(year, month, day, hour, minute, second, humidity, temperature, pressure) 
+(humidity, temperature, pressure) 
 VALUES 
-({},{},{},{},{},{},{},{},{})"""
+({},{},{})"""
