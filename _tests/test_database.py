@@ -12,9 +12,9 @@ class TestDatabase(TestCase):
         self.assertEqual(database._db_file_path, 'my.db', 'File name is correct')
 
     def test_database_connection_context_manager(self):
-        with patch('weather_station._database._database.sqlite3') as mocksql:
+        with patch('weather_station._database._database.sqlite3') as mock_sql:
             connection = Mock()
-            mocksql.connect.return_value = connection
+            mock_sql.connect.return_value = connection
 
             database = Database('my.db')
 
@@ -23,6 +23,13 @@ class TestDatabase(TestCase):
 
         self.assertEqual(connection, database._connection, 'Connection was established')
         connection.close.assert_called_once()
+
+    def test_database_connection_error(self):
+        with patch('weather_station._database._database.logging') as mock_logging:
+            database = Database('1:\my.db')
+            database.connect()
+
+        mock_logging.error.assert_called_once_with('Connection error occurred: unable to open database file')
 
 
 if __name__ == '__main__':

@@ -22,11 +22,9 @@ class Database():
 
     def disconnect(self):
         """Close connection."""
-        try:
-            self._connection.close()
-            logging.info('Connection closed')
-        except sqlite3.Error as error:
-            logging.error('Connection close error occurred: {}'.format(error))
+        self._connection.close()
+        logging.info('Connection closed')
+
 
     @contextmanager
     def connection(self):
