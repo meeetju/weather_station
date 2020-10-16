@@ -1,6 +1,6 @@
 from unittest import TestCase, main
 
-from _sensors.sensor import Measurement
+from weather_station._sensors.sensor import Measurement
 
 
 class TestSensors(TestCase):

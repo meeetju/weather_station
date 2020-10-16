@@ -1,7 +1,7 @@
 from mock import patch, Mock
 from unittest import TestCase, main
 
-from _database._database import Database
+from weather_station._database._database import Database
 
 
 class TestDatabase(TestCase):
@@ -12,7 +12,7 @@ class TestDatabase(TestCase):
         self.assertEqual(database._db_file_path, 'my.db', 'File name is correct')
 
     def test_database_connection_context_manager(self):
-        with patch('_database._database.sqlite3') as mocksql:
+        with patch('weather_station._database._database.sqlite3') as mocksql:
             connection = Mock()
             mocksql.connect.return_value = connection
 
