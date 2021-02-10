@@ -1,0 +1,34 @@
+orbs:
+  farm: f0cal/farm@1.0.0
+version: 2.1
+workflows:
+  build-test-deploy:
+    jobs:
+      - farm/with_f0cal_device:
+        device_type: raspi
+        working_directory: ~/weather_station
+        docker:
+          - image: circleci/python:3.8.0
+        steps:
+          - checkout
+          - restore_cache:
+                keys:
+                  - pip -- {{ checksum "requirements.txt"}}
+          - farm/f0cal_run:
+              name: Install tests dependencies
+              command: 'sudo pip install -r ./test-requirements.txt --upgrade --force-reinstall'
+          - farm/f0cal_run:
+              name: Install dev dependencies
+              command: 'sudo pip install -r ./requirements.txt --upgrade --force-reinstall'
+          - save_cache:
+              key: pip -- {{ checksum "requirements.txt"}}
+              paths: /home/circleci/.local/bin/
+          - farm/f0cal_run:
+              name: Pylint for dev code
+              command: 'pylint ./weather_station/'
+          - farm/f0cal_run:
+              name: Pylint for test code
+              command: 'pylint _tests'
+          - farm/f0cal_run:
+              name: Run pytest
+              command: 'pytest _tests/'
